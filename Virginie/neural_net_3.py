@@ -63,7 +63,7 @@ test_set = test_set.drop(['msno', 'is_churn'], axis=1)
 
 
 model = Sequential()
-model.add(Embedding(20000, 128, input_length=300))
+model.add(Embedding(20000, 128, input_length=input_dim))
 model.add(Dropout(0.2))
 model.add(Conv1D(64, 5, activation='relu'))
 model.add(MaxPooling1D(pool_size=4))
