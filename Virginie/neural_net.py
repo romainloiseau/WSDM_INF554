@@ -41,8 +41,8 @@ X_train, X_test, Y_train, Y_test = train_test_split(X, Y,
 # In[11]:
 
 
-X_train = X_train.as_matrix()
-Y_train = Y_train.as_matrix()
+X_train = X_train.values
+Y_train = Y_train.values
 
 
 # In[6]:
@@ -78,6 +78,12 @@ model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy']
 
 # Fit the model
 model.fit(X_train, Y_train, epochs=150, batch_size=10,  verbose=2)
+
+
+# In[ ]:
+
+
+model.save('my_model.h5')
 
 
 # In[ ]:
