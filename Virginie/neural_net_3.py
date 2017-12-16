@@ -63,12 +63,24 @@ test_set = test_set.drop(['msno', 'is_churn'], axis=1)
 
 
 model = Sequential()
-model.add(Embedding(20000, 128, input_length=input_dim))
-model.add(Dropout(0.2))
-model.add(Conv1D(64, 5, activation='relu'))
-model.add(MaxPooling1D(pool_size=4))
-model.add(LSTM(128))
-model.add(Dense(1, activation='sigmoid'))
+# Add a dropout layer for input layer
+model.add(Dropout(0.2, input_shape=input_dim))
+
+# Add fully connected layer with a ReLU activation function
+model.add(Dense(units=16, activation='relu'))
+
+# Add a dropout layer for previous hidden layer
+model.add(Dropout(0.5))
+
+# Add fully connected layer with a ReLU activation function
+model.add(Dense(units=16, activation='relu'))
+
+# Add a dropout layer for previous hidden layer
+model.add(Dropout(0.5))
+
+# Add fully connected layer with a sigmoid activation function
+model.add(Dense(units=1, activation='sigmoid'))
+
 # Compile model
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
