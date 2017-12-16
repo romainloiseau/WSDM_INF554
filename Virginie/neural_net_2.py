@@ -5,10 +5,8 @@
 
 
 from keras.models import Sequential
-from keras.layers import Input, Dense, Dropout, Activation, Flatten
-from keras.layers import Convolution2D, MaxPooling2D
+from keras.layers import Embedding, LSTM, Dense, Conv1D, MaxPooling1D, Dropout, Activation
 from keras.utils import np_utils
-from keras.datasets import mnist
 
 from keras.models import Model, load_model
 from keras.layers import Input, Dense
@@ -64,11 +62,25 @@ test_set = test_set.drop(['msno', 'is_churn'], axis=1)
 # In[13]:
 
 
-# create model
 model = Sequential()
-model.add(Dense(12, input_dim=X_train.shape[1], init='uniform', activation='relu'))
-model.add(Dense(8, init='uniform', activation='relu'))
-model.add(Dense(1, init='uniform', activation='sigmoid'))
+# Add a dropout layer for input layer
+model.add(Dropout(0.2, input_shape=(input_dim,)))
+
+# Add fully connected layer with a ReLU activation function
+model.add(Dense(units=16, activation='relu'))
+
+# Add a dropout layer for previous hidden layer
+model.add(Dropout(0.5))
+
+# Add fully connected layer with a ReLU activation function
+model.add(Dense(units=16, activation='relu'))
+
+# Add a dropout layer for previous hidden layer
+model.add(Dropout(0.5))
+
+# Add fully connected layer with a sigmoid activation function
+model.add(Dense(units=1, activation='sigmoid'))
+
 # Compile model
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
@@ -83,7 +95,7 @@ model.fit(X_train, Y_train, epochs=150, batch_size=10,  verbose=2)
 # In[ ]:
 
 
-model.save('my_model.h5')
+model.save('model_2.h5')
 
 
 # In[ ]:
