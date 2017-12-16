@@ -64,7 +64,7 @@ test_set = test_set.drop(['msno', 'is_churn'], axis=1)
 
 model = Sequential()
 # Add a dropout layer for input layer
-model.add(Dropout(0.2, input_shape=input_dim))
+model.add(Dropout(0.2, input_shape=(input_dim,)))
 
 # Add fully connected layer with a ReLU activation function
 model.add(Dense(units=16, activation='relu'))
